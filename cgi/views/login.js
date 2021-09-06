@@ -19,7 +19,9 @@ function loginPage (request, cb) {
     template.get('tos.ejs', {
         request: request,
         dest: request._originalPathname || '',
-        login: true
+        login: true,
+        restrictedMode: false, // this is always the result of a POST so we should never block the re-login attempt
+        appIsRestricted: conf['restricted-login-mode']
     }, (err, content) => {
         if (err) {
             throw err;

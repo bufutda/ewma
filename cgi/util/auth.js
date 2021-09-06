@@ -28,7 +28,25 @@ function validateUser (request, username, password, cb) {
                     return;
                 }
                 if (res) {
-                    cb(null, row[0].id, row[0].approved);
+                    // user creds correct
+                    if (conf['restricted-login-mode']) {
+                        request.db.do('SELECT user FROM permissions WHERE user = ? AND perm = "event_login"', [row[0].id], (err, count) => {
+                            if (err) {
+                                cb(err);
+                                return;
+                            }
+                            if (count.length) {
+                                // user has permission
+                                cb(null, row[0].id, row[0].approved);
+                                return;
+                            } else {
+                                cb(null, false, 0);
+                            }
+                        });
+                    } else {
+                        cb(null, row[0].id, row[0].approved);
+                        return;
+                    }
                 } else {
                     // password's wrong
                     cb(null, false, 0);
@@ -63,7 +81,22 @@ function checkSession (request, session, cb) {
                 if (u.valid) {
                     // this authenticates the user
                     u.authenticated = true;
-                    cb(null, u);
+
+                    if (conf['restricted-login-mode']) {
+                        u.checkPerm('event_login', (err, has) => {
+                            if (err) {
+                                cb(err);
+                                return;
+                            }
+                            if (has) {
+                                cb(null, u);
+                            } else {
+                                cb(null, null);
+                            }
+                        });
+                    } else {
+                        cb(null, u);
+                    }
                 } else {
                     cb(null, null);
                 }

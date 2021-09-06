@@ -4,8 +4,9 @@
  */
 
 const template = require(`${__rootname}/util/template`);
+const conf = require(`${__rootname}/conf.json`);
 
-module.exports.matchPaths = ['/tos'];
+module.exports.matchPaths = ['/tos', '/restricted-login'];
 module.exports.name = 'tos';
 module.exports.type = 'GET';
 
@@ -15,7 +16,9 @@ module.exports.handle = (request, cb) => {
     }
     template.get('tos.ejs', {
         request: request,
-        dest: request._originalPathname || ''
+        dest: request._originalPathname || '',
+        restrictedMode: !/restricted-login/.test(request.pathname) && conf['restricted-login-mode'],
+        appIsRestricted: conf['restricted-login-mode']
     }, (err, content) => {
         if (err) {
             throw err;

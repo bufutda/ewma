@@ -23,5 +23,6 @@
     "templateOptions": {
         "remoteMovies": null
     },
-    "password-reset-window": 600000
+    "password-reset-window": 600000,
+    "restricted-login-mode": false
 }

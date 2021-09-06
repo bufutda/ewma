@@ -12,33 +12,45 @@
                 <img class="logo db" src="<%= cacheBuster('images/ewma.svg'); %>" />
             </a>
             <br /><br />
-            <div class="login-container">
-                <p id="tos">
-                    This service is lovingly provided by the Electrical, Computer, and Software
-                    Engineering Students' Society (ZOO). In order to use it, you must abide by the
-                    Terms of Service agreement. Also, we use cookies.
-                    <br />
-                </p>
-                <br />
-                <div id="errorMessage">
-                    <b>
-                        <%= request.errorMessage %>
-                    </b>
-                </div>
-                <div id="login" class="tac">
-                    <form id="login" action="/login" method="POST">
-                        <input class="input-textbox" type="text" name="username" id="username"
-                            placeholder="username" />
-                        <input class="input-textbox" type="password" name="password" id="password"
-                            placeholder="password" />
-                        <input type="hidden" name="dest" value="<%= dest %>" />
+
+            <% if (restrictedMode) { %>
+                <div class="login-container">
+                    <p id="tos">
+                        EWMA is currently hosting an event and is unavailable. Please try again later.
                         <br />
-                        <input class="button" type="submit" value="I promise I won't be an Ass" />
-                    </form>
-                    <a href="/newaccount">Create an Account</a>
-                    <a href="/useapasswordmanager">Forgot Password?</a>
+                    </p>
                 </div>
-            </div>
+            <% } else { %>
+                <div class="login-container">
+                    <p id="tos">
+                        This service is lovingly provided by the Electrical, Computer, and Software
+                        Engineering Students' Society (ZOO). In order to use it, you must abide by the
+                        Terms of Service agreement. Also, we use cookies.
+                        <br />
+                    </p>
+                    <br />
+                    <div id="errorMessage">
+                        <b>
+                            <%= request.errorMessage %>
+                        </b>
+                    </div>
+                    <div id="login" class="tac">
+                        <form id="login" action="/login" method="POST">
+                            <input class="input-textbox" type="text" name="username" id="username"
+                                placeholder="username" />
+                            <input class="input-textbox" type="password" name="password" id="password"
+                                placeholder="password" />
+                            <input type="hidden" name="dest" value="<%= dest %>" />
+                            <br />
+                            <input class="button" type="submit" value="I promise I won't be an Ass" />
+                        </form>
+                        <% if (!appIsRestricted) { %>
+                            <a href="/newaccount">Create an Account</a>
+                            <a href="/useapasswordmanager">Forgot Password?</a>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
         </div>
     </div>
 </body>

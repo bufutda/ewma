@@ -51,6 +51,7 @@ dbWrapper.acquire(function (db) {
                     request.pathname !== '/tosagree'
                     && request.pathname !== '/newaccount'
                     && request.pathname !== '/useapasswordmanager'
+                    && request.pathname !== '/restricted-login'
                 )
                 && request.method === 'GET'
             ) {
