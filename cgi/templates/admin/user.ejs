@@ -9,6 +9,7 @@
         <%- include('../headers.ejs', {pageId: 'Manage User'}); %>
         <div id="content">
             <h3>
+                <img src="<%= cacheBuster('images/delete-colored.svg') %>" class="delete-user delete-icon" data-user-id="<%= user.attributes.id %>" title="Delete User" />
                 User: <%= user.attributes.username %>
                 <div class="smolits fr">
                     ID: <%= user.attributes.id %>

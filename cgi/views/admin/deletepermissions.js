@@ -1,5 +1,5 @@
 /**
- * Add new permission to the database
+ * Remove permissions from the DB
  * @author Mitchell Sawatzky
  */
 
