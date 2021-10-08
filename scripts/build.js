@@ -173,6 +173,22 @@ let steps = [
         }
     },
     {
+        name: `Linking music sources: ${conf["build-destination"]}/static/music_sources`,
+        hook: (cb) => {
+            let ln = child_process.spawn('ln', ['-s', `${conf['music-sources']}`, `${conf['build-destination']}/static/music_sources`], {
+                stdio: 'inherit'
+            });
+
+            ln.on('exit', (code) => {
+                if (code === 0) {
+                    cb();
+                } else {
+                    cb(new Error(`Non-zero exit code: ${code}`));
+                }
+            });
+        }
+    },
+    {
         name: `Creating static structure: ${conf["build-destination"]}/static/css`,
         hook: (cb) => {
             let mk = child_process.spawn('mkdir', ['-p', `${conf['build-destination']}/static/css`], {

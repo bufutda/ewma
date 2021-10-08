@@ -14,6 +14,13 @@ function populateHeaders (request, cb) {
         link: '/themes'
     });
 
+    if (request.permissions.beta_view_songs) {
+        request.headerLinks.push({
+            text: 'Music',
+            link: '/music'
+        });
+    }
+
     // request.headerLinks.push({
     //     text: 'Submit Movie',
     //     link: '/contact'
@@ -51,6 +58,13 @@ function populateHeaders (request, cb) {
             request.headerLinksAdmin.push({
                 text: 'Manage Users',
                 link: '/admin/users'
+            });
+        }
+
+        if (request.permissions.song_edit) {
+            request.headerLinksAdmin.push({
+                text: 'Add Song',
+                link: '/admin/song/new'
             });
         }
 

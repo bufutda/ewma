@@ -1,6 +1,7 @@
 {
     "build-destination": "/srv/http/ewma",
     "movie-sources": "/path/to/movies",
+    "music-sources": "/path/to/songs",
     "build-require-sudo": true,
     "create-sourceMaps": false,
     "cgi-executable": "/usr/bin/node",

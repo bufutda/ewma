@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+    <%- include('head_shit.ejs', {title: 'EWMA | Music', request: request, cacheBuster: cacheBuster}); %>
+</head>
+<body>
+    <div id="site">
+        <%- include('headers.ejs', {pageId: 'Music'}); %>
+        <div id="content">
+            <p>
+                Movies often have great songs, and the teams behind them also sometimes produce music for Scavenger Hunt during Frosh and ENGG Week (or just if they feel like it!).
+                <br />This is a collection of songs (extracted from movies where possible) created by students.
+            </p>
+
+            <table id="music">
+                <thead>
+                    <tr>
+                        <% if (request.permissions.song_edit) { %><th class="editColumn"></th> <% } %>
+                        <th class="yearmovie">Movie / Year Released</th>
+                        <th class="name">Name</th>
+                        <th class="metadata">Lyrics / Metadata</th>
+                        <th class="audio">Audio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let song of songs) { %>
+                        <tr data-song="<%= song.song_id %>" class="<%= song.metadata ? 'expandable' : '' %>">
+                            <% if (request.permissions.song_edit) { %>
+                                <td class="editColumn">
+                                    <a href="/admin/song/edit/<%= song.song_id %>">
+                                        <img class="editIcon" alt="edit" src="<%= cacheBuster('images/edit.svg'); %>" />
+                                    </a>
+                                </td>
+                            <% } %>
+                            <td class="yearmovie">
+                                <% if (song.movie_id) { %>
+                                    <a href="/movies/<%= song.movie_id %>"><%= song.title %></a> (<%= song.year %>)
+                                <% } else if (song.release) { %>
+                                    <%= new Date(song.release * 1000).getFullYear() %>
+                                <% } else {%>
+                                    Unknown
+                                <% } %>
+                            </td>
+                            <td class="name"><%= song.name %></td>
+                            <% if (song.metadata) { %>
+                                <td class="metadata collapsed">
+                                    <pre><%= song.metadata %></pre>
+                                </td>
+                            <% } else { %>
+                                <td class="metadata nodata">
+                                </td>
+                            <% } %>
+                            <td class="audio">
+                                <audio controls>
+                                    <source src="/static/music_sources/<%= song.songpath %>" type="audio/<%= song.mime %>" />
+                                </audio>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <%- include('footers.ejs', {}); %>
+    </div>
+</body>
