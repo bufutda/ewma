@@ -18,4 +18,23 @@ $(document).ready(function () {
             });
         }
     });
+
+    $('.delete-user').click(function() {
+        if (confirm('Are you sure you want to permenantly delete this user?')) {
+            $.ajax({
+                url: '/admin/users/delete',
+                method: 'POST',
+                data: JSON.stringify({
+                    user: $(this).attr('data-user-id')
+                }),
+                contentType: 'application/json',
+                error: function () {
+                    alert('An error ocurred');
+                },
+                success: function () {
+                    window.location = '/admin/users';
+                }
+            });
+        }
+    });
 });
