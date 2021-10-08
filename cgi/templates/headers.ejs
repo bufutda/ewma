@@ -34,7 +34,7 @@
         </tbody>
     </table>
 
-    <label class="darkmode-toggle">
+    <label class="darkmode-toggle" title="Theme">
         <input class="checkbox" name="darkmode-toggle" type="checkbox" <%= request.user.attributes.dark ? 'checked="checked"' : '' %> />
         <span class="slider round"></span>
         <script type="text/javascript" src="<%= cacheBuster('js/darkmode-toggle.js') %>"></script>

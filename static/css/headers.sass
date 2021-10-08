@@ -63,7 +63,7 @@
     display: inline-block
     width: 60px
     height: 34px
-    margin: 110px 8px 0
+    margin: 8px 8px 0
 
 /* Hide default HTML checkbox */
 .darkmode-toggle input 
@@ -91,11 +91,18 @@
     left: 4px
     bottom: 4px
     background-color: white
+    background-image: url('/static/images/day.png')
+    background-size: 60% 60%
+    background-repeat: no-repeat
+    background-position: 50%
+    opacity: 85%
     -webkit-transition: .4s
     transition: .4s
 
 input:checked + .slider 
     background-color: $blueGrey
+    &:before
+        background-image: url('/static/images/night.png')
 
 input:focus + .slider 
     box-shadow: 0 0 1px $blueGrey
