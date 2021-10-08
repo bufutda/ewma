@@ -5,6 +5,7 @@
 </head>
 
 <body class="<%= request.user.attributes.dark ? "dark-theme" : "light-theme" %>">
+    <%- include('darkmode.ejs', {request}); %>
     <div id="site">
         <div id="content">
             <div class="absc db">
